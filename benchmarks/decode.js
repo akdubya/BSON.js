@@ -1,6 +1,5 @@
 var ext    = require('../lib/bson_ext'),
     pure   = require('../lib/bson_pure'),
-    sys    = require('sys'),
     Buffer = require('buffer').Buffer,
     data   = ext.encode({
       'array'     : [1, 2, 3],
@@ -19,7 +18,7 @@ var ext    = require('../lib/bson_ext'),
       'undefined' : undefined
     });
 
-sys.puts('Decoding test:');
+console.log('Decoding test:');
 
 var startAddon = new Date().getTime();
 
@@ -27,7 +26,7 @@ for (i=0; i<100000; i++) {
   ext.decode(data);
 }
 
-sys.puts("Addon completed in " + ((new Date().getTime() - startAddon)/1000) + " seconds.");
+console.log("Addon completed in " + ((new Date().getTime() - startAddon)/1000) + " seconds.");
 
 var startPure = new Date().getTime();
 
@@ -35,4 +34,4 @@ for (i=0; i<100000; i++) {
   pure.decode(data);
 }
 
-sys.puts("Pure completed in " + ((new Date().getTime() - startPure)/1000) + " seconds.");
+console.log("Pure completed in " + ((new Date().getTime() - startPure)/1000) + " seconds.");

@@ -139,9 +139,8 @@ inline void encodeBinary(bson_generator *bb, const char *name, const Local<Objec
         type = 0;
     }
 
-    Buffer *buf = ObjectWrap::Unwrap<Buffer>(obj);
-    const char *data = buf->data();
-    int len = buf->length();
+    const char *data = Buffer::Data(obj);
+    int len = Buffer::Length(obj);
     bson_append_binary(bb, name, (char)type, data, len);
 }
 

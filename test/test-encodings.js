@@ -112,16 +112,17 @@ var comparisons = [
         "\x00" +
         "\x00"
     ],
-    [
-        "Binary (buffer)",
-        {"bin": function() {var buf = new Buffer([1,2,3]); buf.bsonType = 0; return buf}()},
-        "\x12\x00\x00\x00\x05bin\x00\x03\x00\x00\x00\x00\x01\x02\x03\x00"
-    ],
-    [
-        "Binary type 2 (buffer)",
-        {"bin": function() {var buf = new Buffer([1,2,3]); buf.bsonType = 2; return buf}()},
-        "\x16\x00\x00\x00\x05bin\x00\x07\x00\x00\x00\x02\x03\x00\x00\x00\x01\x02\x03\x00"
-    ],
+//    assert.deepEqual doesn't work across slow & fast buffers; new tests at the bottom
+//    [
+//        "Binary (buffer)",
+//        {"bin": function() {var buf = new Buffer([1,2,3]); buf.bsonType = 0; return buf}()},
+//        "\x12\x00\x00\x00\x05bin\x00\x03\x00\x00\x00\x00\x01\x02\x03\x00"
+//    ],
+//    [
+//        "Binary type 2 (buffer)",
+//        {"bin": function() {var buf = new Buffer([1,2,3]); buf.bsonType = 2; return buf}()},
+//        "\x16\x00\x00\x00\x05bin\x00\x07\x00\x00\x00\x02\x03\x00\x00\x00\x01\x02\x03\x00"
+//    ],
     [
         "Undefined", {"foo": undefined}, "\x0a\x00\x00\x00\x06foo\x00\x00"
     ],
@@ -253,3 +254,19 @@ assert.deepEqual(bson.encode(dbrobj), dbrbson);
 puts("Decode DBRef");
 var dbrdecoded = bson.decode(dbrbson);
 assert.deepEqual(dbrdecoded, dbrobj);
+
+puts("Encode Binary");
+var binobj = {"bin": function() {var buf = new Buffer([1,2,3]); buf.bsonType = 0; return buf}()},
+    binbson = "\x12\x00\x00\x00\x05bin\x00\x03\x00\x00\x00\x00\x01\x02\x03\x00";
+assert.strictEqual(bson.encode(binobj), binbson);
+
+puts("Decode Binary");
+assert.strictEqual(bson.decode(binbson).bin.toString(), binobj.bin.toString());
+
+puts("Encode Binary type 2");
+var binobj2 = {"bin": function() {var buf = new Buffer([1,2,3]); buf.bsonType = 2; return buf}()},
+    binbson2 = "\x16\x00\x00\x00\x05bin\x00\x07\x00\x00\x00\x02\x03\x00\x00\x00\x01\x02\x03\x00";
+assert.strictEqual(bson.encode(binobj2), binbson2);
+
+puts("Decode Binary type 2");
+assert.strictEqual(bson.decode(binbson2).bin.toString(), binobj2.bin.toString());

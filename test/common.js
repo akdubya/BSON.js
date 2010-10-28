@@ -8,6 +8,6 @@ exports.libDir = path.join(exports.testDir, "../lib");
 
 require.paths.push(exports.libDir);
 
-var sys = require("sys");
-for (var i in sys) exports[i] = sys[i];
+var util = require('util');
+for (var i in util) exports[i] = util[i];
 exports.assert = require('assert');

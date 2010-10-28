@@ -65,8 +65,7 @@ int OnString(void *ctx, const char *e_name, const char *str, int len) {
 
 int OnBinary(void *ctx, const char *e_name, const char *data, unsigned char subtype, int len) {
     bson_context *foo = (bson_context *)ctx;
-    node::Buffer *obj = node::Buffer::New(len);
-    memcpy((void *)obj->data(), (const void *)data, obj->length());
+    node::Buffer *obj = node::Buffer::New((char *)data, (size_t)len);
     obj->handle_->Set(bson_type_sym, Integer::New(subtype));
     foo->stack[foo->stackPos]->Set(String::New(e_name), obj->handle_);
     return 1;
