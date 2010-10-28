@@ -9,6 +9,11 @@
 #define INLINE static
 #endif
 
+size_t strnlen (const char *string, size_t maxlen) {
+  const char *end = memchr (string, '\0', maxlen);
+  return end ? (size_t) (end - string) : maxlen;
+}
+
 static const int initialBufferSize = 128;
 static const int zero = 0;
 

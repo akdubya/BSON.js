@@ -19,7 +19,7 @@ static Persistent<String> scope_sym;
 static Persistent<String> code_sym;
 
 namespace ObjectID {
-    PERSIST_TEMPLATE;
+    PERSIST_TEMPLATE
 
     Handle<Value> New(bson_oid_t *oid) {
         HandleScope scope;
@@ -106,7 +106,7 @@ namespace ObjectID {
 }
 
 namespace Code {
-    PERSIST_TEMPLATE;
+    PERSIST_TEMPLATE
 
     Handle<Value> New(const char *code) {
         HandleScope scope;
@@ -149,7 +149,7 @@ namespace Code {
 }
 
 namespace Symbol {
-    PERSIST_TEMPLATE;
+    PERSIST_TEMPLATE
 
     Handle<Value> New(const char *sym, int length) {
         HandleScope scope;
@@ -180,7 +180,7 @@ namespace Symbol {
 }
 
 namespace Timestamp {
-    PERSIST_TEMPLATE;
+    PERSIST_TEMPLATE
 
     Handle<Value> New(uint32_t incr, uint32_t ts) {
         HandleScope scope;

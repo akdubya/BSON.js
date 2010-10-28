@@ -19,7 +19,7 @@ def configure(conf):
 def build(bld):
   bson = bld.new_task_gen(features = 'cc')
   bson.cppflags = ['-O3']
-  bson.cflags = ['-fPIC']
+  bson.cflags = ['-fPIC', '-Wall' ,'-ansi', '-pedantic']
   bson.source = 'deps/bson/bson.c'
   bson.includes = 'deps/bson/'
   bson.name = 'bson'
